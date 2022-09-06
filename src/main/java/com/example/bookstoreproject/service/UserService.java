@@ -1,15 +1,10 @@
 package com.example.bookstoreproject.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.List;
 
-public class BookService implements IService {
-    @Autowired
-    public BookService bookService;
+public class UserService implements IService{
     @Override
-    public List<Object> getAll()
-    {
+    public List<Object> getAll() {
         return null;
     }
 
