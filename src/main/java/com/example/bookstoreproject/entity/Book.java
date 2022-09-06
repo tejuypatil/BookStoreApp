@@ -1,5 +1,7 @@
 package com.example.bookstoreproject.entity;
 
+import com.example.bookstoreproject.dto.BookRequestDTO;
+
 import java.time.LocalDate;
 
 public class Book {
@@ -9,13 +11,7 @@ public class Book {
     private LocalDate arrivalDate;
     private  String coverImage;
     private int quantity;
-
-    public Book(String name, String author, int price, LocalDate arrivalDate, String coverImage, int quantity) {
-        this.name = name;
-        this.author = author;
-        this.price = price;
-        this.arrivalDate = arrivalDate;
-        this.coverImage = coverImage;
-        this.quantity = quantity;
+    public Book(BookRequestDTO bookRequestDTO) {
+        this.name = bookRequestDTO.name;
     }
 }
