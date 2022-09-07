@@ -2,8 +2,6 @@ package com.example.bookstoreproject.entity;
 import javax.persistence.*;
 
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int userId;
     private String firstName;
     private String lastName;
