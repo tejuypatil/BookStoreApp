@@ -9,5 +9,6 @@ public class UserRequestDTO {
     private String address;
     private int userId;
     private String email;
+
 }
 

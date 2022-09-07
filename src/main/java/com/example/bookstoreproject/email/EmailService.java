@@ -1,0 +1,21 @@
+package com.example.bookstoreproject.email;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
+
+@Service
+public class EmailService {
+
+   JavaMailSender javaMailSender;
+
+   public void sendEmail(String toEmail, String subject, String body){
+       SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+       simpleMailMessage.setFrom("tejuypatil@gmail.com");
+       simpleMailMessage.setTo(toEmail);
+       simpleMailMessage.setText(body);
+       simpleMailMessage.setSubject(subject);
+
+       javaMailSender.send(simpleMailMessage);
+       System.out.println("Mail Sent Successfully");
+   }
+}
