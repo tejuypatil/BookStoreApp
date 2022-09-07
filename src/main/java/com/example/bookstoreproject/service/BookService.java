@@ -43,6 +43,5 @@ public class BookService implements IBookService {
     public void deleteBook(int bookId) {
         Book book = this.getBook(bookId);
         bookRepository.delete(book);
-
     }
 }
