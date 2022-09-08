@@ -1,17 +1,22 @@
 package com.example.bookstoreproject.service;
 
-import com.example.bookstoreproject.dto.UserRequestDTO;
+import com.example.bookstoreproject.dto.UserLoginRequestDTO;
+import com.example.bookstoreproject.dto.UserRegisterRequestDTO;
 import com.example.bookstoreproject.email.EmailService;
 import com.example.bookstoreproject.entity.UserData;
+import com.example.bookstoreproject.exception.UserAlreadyExist;
+import com.example.bookstoreproject.exception.UserOrPasswordWrong;
 import com.example.bookstoreproject.repository.UserRepository;
-import com.example.bookstoreproject.util.TokenUtility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolationException;
 import java.util.Optional;
 
 @Service
-public class UserService implements IUserService{
+public class UserService implements IUserService
+{
     @Autowired
     public UserRepository userRepository;
 
@@ -19,30 +24,39 @@ public class UserService implements IUserService{
     EmailService emailService;
 
     @Override
-    public UserData getUserData(int userId) {
-        Optional<UserData> userData = userRepository.findById(userId);
-        return userData.get();
+    public UserData registerUser(UserRegisterRequestDTO userRegisterRequestDTO){
+        try {
+            UserData userData = new UserData(userRegisterRequestDTO);
+            userData = userRepository.save(userData);
+            emailService.sendEmail(userData.getEmail(),"User registration successful","Hi "+userData.getFirstName()+" \nYour user successfully registered with BookStore App");
+            return userData;
+        }
+        catch (DataIntegrityViolationException exception) {
+            throw new UserAlreadyExist(userRegisterRequestDTO);
+        }
+
     }
 
     @Override
-    public UserData addUserData(UserRequestDTO userRequestDTO, int userId) {
-        UserData userData = new UserData(userRequestDTO);
-        userData.setUserId(userId);
-        return userRepository.save(userData);
-    }
-
-    @Override
-    public UserData createUserData(UserRequestDTO userRequestDTO) {
-        UserData userData = new UserData(userRequestDTO);
-        userRepository.save(userData);
-        emailService.sendEmail(userRequestDTO.getEmail(),"User created","successfully signup");
-        return userData;
-    }
-
-    @Override
-    public void deleteUserData(int userId) {
-        UserData userData = this.getUserData(userId);
-        userRepository.delete(userData);
-
+    public String login(UserLoginRequestDTO userLoginRequestDTO) {
+        Optional<UserData> userDataOptional = userRepository.findByLoginId(userLoginRequestDTO.getLoginId());
+        if(userDataOptional.isPresent())
+        {
+            String passwordInDatabase = userDataOptional.get().getPassword();
+            String passwordEntered = userLoginRequestDTO.getPassword();
+            if (passwordEntered.equals(passwordInDatabase))
+            {
+                System.out.println("Login Successful");
+            }
+            else
+            {
+                throw new UserOrPasswordWrong(userLoginRequestDTO.getLoginId());
+            }
+        }
+        else
+        {
+            throw new UserOrPasswordWrong(userLoginRequestDTO.getLoginId());
+        }
+        return null;
     }
 }

@@ -1,7 +1,8 @@
 package com.example.bookstoreproject.controller;
 
-import com.example.bookstoreproject.dto.UserRequestDTO;
-import com.example.bookstoreproject.dto.UserResponseDTO;
+import com.example.bookstoreproject.dto.UserLoginRequestDTO;
+import com.example.bookstoreproject.dto.UserRegisterRequestDTO;
+import com.example.bookstoreproject.dto.UserRegisterResponseDTO;
 import com.example.bookstoreproject.entity.UserData;
 import com.example.bookstoreproject.service.UserService;
 import com.example.bookstoreproject.util.TokenUtility;
@@ -16,29 +17,18 @@ public class UserDataController {
 
     @Autowired
     TokenUtility tokenUtility;
-    @PostMapping("/userservice")
-    public ResponseEntity<UserResponseDTO> createUserDetails(@RequestBody UserRequestDTO userRequestDTO){
-        UserData userData = userService.createUserData(userRequestDTO);
-        String token = tokenUtility.createToken(userData.getUserId());
 
-        return new ResponseEntity<UserResponseDTO>(new UserResponseDTO("Inserted book data successfully",userData,token), HttpStatus.OK);
+    @PostMapping("/userservice/register")
+    public ResponseEntity<UserRegisterResponseDTO> registerUser(@RequestBody UserRegisterRequestDTO userRegisterRequestDTO) {
+        UserData userData=userService.registerUser(userRegisterRequestDTO);
+        UserRegisterResponseDTO userRegisterResponseDTO=new UserRegisterResponseDTO(userData,"User registered successfully");
+        return new ResponseEntity<UserRegisterResponseDTO>(userRegisterResponseDTO, HttpStatus.OK);
     }
 
-    @GetMapping("userservice/{userId}")
-    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable("userId") int userId){
-        UserData userData = userService.getUserData(userId);
-        return new ResponseEntity<UserResponseDTO>(new UserResponseDTO("Get call for Id successful",userData),HttpStatus.OK);
-
-    }
-    @PutMapping("/userservice/{userId}")
-    public ResponseEntity<UserResponseDTO> updateUserById(@PathVariable("userId")int userId,@RequestBody UserRequestDTO userRequestDTO){
-        UserData userData = userService.addUserData(userRequestDTO,userId);
-        return new ResponseEntity<UserResponseDTO>(new UserResponseDTO("Updated book data successfully",userData),HttpStatus.OK);
-    }
-    @DeleteMapping("/userservice/{userId}")
-    public ResponseEntity<UserResponseDTO> deleteByBookId(@PathVariable("bookId") int userId){
-        userService.deleteUserData(userId);
-        return new ResponseEntity<UserResponseDTO>(new UserResponseDTO("Deleted successfully",null),HttpStatus.OK);
+    @PostMapping("userservice/login")
+    public ResponseEntity<String> loginUser(@RequestBody UserLoginRequestDTO userLoginRequestDTO) {
+        String token = userService.login(userLoginRequestDTO);
+        return new ResponseEntity<String>(token,HttpStatus.OK);
     }
 }
 

@@ -1,14 +1,14 @@
 package com.example.bookstoreproject.service;
 
-import com.example.bookstoreproject.dto.UserRequestDTO;
+
+import com.example.bookstoreproject.dto.UserLoginRequestDTO;
+import com.example.bookstoreproject.dto.UserRegisterRequestDTO;
 import com.example.bookstoreproject.entity.UserData;
 
-public interface IUserService {
-    UserData getUserData(int userId);
+public interface IUserService
+{
 
-    UserData addUserData(UserRequestDTO userRequestDTO, int userId);
+    UserData registerUser(UserRegisterRequestDTO userRegisterRequestDTO);
 
-    UserData createUserData(UserRequestDTO userRequestDTO);
-
-    void deleteUserData(int userId);
+    String login(UserLoginRequestDTO userLoginRequestDTO);
 }
