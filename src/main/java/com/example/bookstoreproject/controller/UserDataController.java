@@ -1,10 +1,8 @@
 package com.example.bookstoreproject.controller;
 
-import com.example.bookstoreproject.dto.BookRequestDTO;
 import com.example.bookstoreproject.dto.BookResponseDTO;
 import com.example.bookstoreproject.dto.UserRequestDTO;
 import com.example.bookstoreproject.dto.UserResponseDTO;
-import com.example.bookstoreproject.entity.Book;
 import com.example.bookstoreproject.entity.UserData;
 import com.example.bookstoreproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,7 @@ public class UserDataController {
     public UserService userService;
     @PostMapping("/userservice")
     public ResponseEntity<UserResponseDTO> createUserDetails(@RequestBody UserRequestDTO userRequestDTO){
-        UserData userData = userService.createUserDetails(userRequestDTO);
+        UserData userData = userService.createUserData(userRequestDTO);
         return new ResponseEntity<UserResponseDTO>(new UserResponseDTO("Inserted book data successfully",userData), HttpStatus.OK);
     }
 
@@ -29,13 +27,13 @@ public class UserDataController {
     }
     @PutMapping("/userservice/{userId}")
     public ResponseEntity<UserResponseDTO> updateUserById(@PathVariable("userId")int userId,@RequestBody UserRequestDTO userRequestDTO){
-        UserData userData = userService.addUserDetails(userRequestDTO,userId);
+        UserData userData = userService.addUserData(userRequestDTO,userId);
         return new ResponseEntity<UserResponseDTO>(new UserResponseDTO("Updated book data successfully",userData),HttpStatus.OK);
     }
     @DeleteMapping("/userservice/{userId}")
-    public ResponseEntity<BookResponseDTO> deleteByBookId(@PathVariable("bookId") int bookId){
-        userService.deleteUserDataById(bookId);
-        return new ResponseEntity<BookResponseDTO>(new BookResponseDTO("Deleted successfully",bookId),HttpStatus.OK);
+    public ResponseEntity<UserResponseDTO> deleteByBookId(@PathVariable("bookId") int userId){
+        userService.deleteUserData(userId);
+        return new ResponseEntity<UserResponseDTO>(new UserResponseDTO("Deleted successfully",null),HttpStatus.OK);
     }
 }
 

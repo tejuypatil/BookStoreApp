@@ -18,11 +18,9 @@ public class BookStoreController {
     public IBookService bookService;
 
     @GetMapping("/bookservice")
-    public ResponseEntity<BookResponseDTO> getAllBooks() {
+    public List<Book> getAllBooks() {
         List<Book> bookList= bookService.getAllBooks();
-        if (bookList != null)
-        return new ResponseEntity<>(new BookResponseDTO("Get call for Id successful", (Book) bookList), HttpStatus.OK);
-        return null;
+        return bookList;
     }
     @PostMapping("/bookservice")
     public ResponseEntity<BookResponseDTO>createBookData(@RequestBody BookRequestDTO bookRequestDTO){
@@ -44,6 +42,6 @@ public class BookStoreController {
     @DeleteMapping("/bookservice/{bookId}")
     public ResponseEntity<BookResponseDTO> deleteByBookId(@PathVariable("bookId") int bookId){
     bookService.deleteBook(bookId);
-    return new ResponseEntity<BookResponseDTO>(new BookResponseDTO("Deleted successfully",bookId),HttpStatus.OK);
+    return new ResponseEntity<BookResponseDTO>(new BookResponseDTO("Deleted successfully",null),HttpStatus.OK);
     }
 }

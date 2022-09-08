@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 @Entity
 @Data
-@Table(name = "UserDetails")
+@Table(name = "UserData")
 public class UserData {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -15,25 +15,21 @@ public class UserData {
     private String email;
     private  String address;
 
-   // @Column(name = "Login_Id", nullable = false)
-    //private String loginId;
+    @Column(name = "Login_id", nullable = false)
+    private String loginId;
 
     private String password;
 
-   // @Column(name = "is_admin", nullable = false)
-   // private boolean isAdmin;
+    @Column(name = "is_admin", nullable = false)
+    private boolean isAdmin;
 
-    public UserData(int userId, String firstName, String lastName, String email, String address, String password) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.address = address;
-        this.password = password;
-    }
 
     public UserData(UserRequestDTO userRequestDTO) {
-
+        this.firstName=userRequestDTO.getFirstName();
+        this.lastName=userRequestDTO.getLastName();
+        this.address=userRequestDTO.getAddress();
+        this.loginId=userRequestDTO.getLoginId();
+        this.isAdmin=userRequestDTO.isAdmin();
     }
 
     public UserData() {

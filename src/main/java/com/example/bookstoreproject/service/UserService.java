@@ -20,21 +20,21 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public UserData addUserDetails(UserRequestDTO userRequestDTO, int userId) {
+    public UserData addUserData(UserRequestDTO userRequestDTO, int userId) {
         UserData userData = new UserData(userRequestDTO);
         userData.setUserId(userId);
         return userRepository.save(userData);
     }
 
     @Override
-    public UserData createUserDetails(UserRequestDTO userRequestDTO) {
+    public UserData createUserData(UserRequestDTO userRequestDTO) {
         UserData userData = null;
         userData = new UserData(userRequestDTO);
         return userRepository.save(userData);
     }
 
     @Override
-    public void deleteUserDataById(int userId) {
+    public void deleteUserData(int userId) {
         UserData userData = this.getUserData(userId);
         userRepository.delete(userData);
 

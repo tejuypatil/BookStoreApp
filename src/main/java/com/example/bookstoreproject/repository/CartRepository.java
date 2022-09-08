@@ -8,11 +8,4 @@ import java.util.List;
 
 @Repository
 public interface CartRepository extends JpaRepository<Cart,Integer> {
-    Cart findByUserIdAndBookId(long userId, int bookId);
-
-    void updateOrderQuantity(int order_quantity, int bookId);
-
-    List<Cart> findByUserId(long userId);
-
-    void deleteByUserAndBook(int userId, int bookId);
 }

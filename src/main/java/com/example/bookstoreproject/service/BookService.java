@@ -23,8 +23,7 @@ public class BookService implements IBookService {
 
     @Override
     public Book createBook(BookRequestDTO bookRequestDTO) {
-        Book book =null;
-        book = new Book(bookRequestDTO);
+        Book book  = new Book(bookRequestDTO);
         return bookRepository.save(book);
     }
 
@@ -36,12 +35,12 @@ public class BookService implements IBookService {
     @Override
     public Book updateBook(int bookId, BookRequestDTO bookRequestDTO) {
         Book book = this.getBook(bookId);
-        book.updateBook(bookRequestDTO);
+        book.setName(bookRequestDTO.name);
+        book.setAuthor(bookRequestDTO.author);
         return bookRepository.save(book);
     }
     @Override
     public void deleteBook(int bookId) {
-        Book book = this.getBook(bookId);
-        bookRepository.delete(book);
+        bookRepository.deleteById(bookId);
     }
 }

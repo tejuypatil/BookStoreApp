@@ -5,8 +5,10 @@ import com.example.bookstoreproject.entity.UserData;
 
 public interface IUserService {
     UserData getUserData(int userId);
-    UserData addUserDetails(UserRequestDTO userRequstDTO, int userId);
 
-    UserData createUserDetails(UserRequestDTO userRequestDTO);
-    void deleteUserDataById(int userId);
+    UserData addUserData(UserRequestDTO userRequstDTO, int userId);
+
+    UserData createUserData(UserRequestDTO userRequestDTO);
+
+    void deleteUserData(int userId);
 }

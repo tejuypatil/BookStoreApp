@@ -7,8 +7,9 @@ public class UserRequestDTO {
     private String firstName;
     private String lastName;
     private String address;
-    private int userId;
     private String email;
+    private String loginId;
+    private boolean isAdmin;
 
 }
 
