@@ -1,8 +1,10 @@
 package com.example.bookstoreproject.service;
 
 import com.example.bookstoreproject.dto.UserRequestDTO;
+import com.example.bookstoreproject.email.EmailService;
 import com.example.bookstoreproject.entity.UserData;
 import com.example.bookstoreproject.repository.UserRepository;
+import com.example.bookstoreproject.util.TokenUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,9 @@ import java.util.Optional;
 public class UserService implements IUserService{
     @Autowired
     public UserRepository userRepository;
+
+    @Autowired
+    EmailService emailService;
 
     @Override
     public UserData getUserData(int userId) {
@@ -28,9 +33,10 @@ public class UserService implements IUserService{
 
     @Override
     public UserData createUserData(UserRequestDTO userRequestDTO) {
-        UserData userData = null;
-        userData = new UserData(userRequestDTO);
-        return userRepository.save(userData);
+        UserData userData = new UserData(userRequestDTO);
+        userRepository.save(userData);
+        emailService.sendEmail(userRequestDTO.getEmail(),"User created","successfully signup");
+        return userData;
     }
 
     @Override
