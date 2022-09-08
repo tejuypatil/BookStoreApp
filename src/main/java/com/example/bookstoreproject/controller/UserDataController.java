@@ -1,6 +1,7 @@
 package com.example.bookstoreproject.controller;
 
 import com.example.bookstoreproject.dto.UserLoginRequestDTO;
+import com.example.bookstoreproject.dto.UserLoginResponseDTO;
 import com.example.bookstoreproject.dto.UserRegisterRequestDTO;
 import com.example.bookstoreproject.dto.UserRegisterResponseDTO;
 import com.example.bookstoreproject.entity.UserData;
@@ -26,9 +27,9 @@ public class UserDataController {
     }
 
     @PostMapping("userservice/login")
-    public ResponseEntity<String> loginUser(@RequestBody UserLoginRequestDTO userLoginRequestDTO) {
+    public ResponseEntity<UserLoginResponseDTO> loginUser(@RequestBody UserLoginRequestDTO userLoginRequestDTO) {
         String token = userService.login(userLoginRequestDTO);
-        return new ResponseEntity<String>(token,HttpStatus.OK);
+        return new ResponseEntity<UserLoginResponseDTO>(new UserLoginResponseDTO("Token Generated",token),HttpStatus.OK);
     }
 }
 

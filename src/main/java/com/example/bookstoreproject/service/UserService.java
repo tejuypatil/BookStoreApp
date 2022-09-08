@@ -7,6 +7,7 @@ import com.example.bookstoreproject.entity.UserData;
 import com.example.bookstoreproject.exception.UserAlreadyExist;
 import com.example.bookstoreproject.exception.UserOrPasswordWrong;
 import com.example.bookstoreproject.repository.UserRepository;
+import com.example.bookstoreproject.util.TokenUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ import java.util.Optional;
 @Service
 public class UserService implements IUserService
 {
+    @Autowired
+    TokenUtility tokenUtility;
     @Autowired
     public UserRepository userRepository;
 
@@ -47,6 +50,8 @@ public class UserService implements IUserService
             if (passwordEntered.equals(passwordInDatabase))
             {
                 System.out.println("Login Successful");
+                String token = tokenUtility.createToken(userDataOptional.get().getUserId());
+                return token;
             }
             else
             {
@@ -57,6 +62,5 @@ public class UserService implements IUserService
         {
             throw new UserOrPasswordWrong(userLoginRequestDTO.getLoginId());
         }
-        return null;
     }
 }
