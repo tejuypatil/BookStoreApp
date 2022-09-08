@@ -24,7 +24,7 @@ public class CartService implements ICartService {
 
     @Override
     public Cart getCart(int cartId) {
-        return cartRepository.getById(cartId);
+        return cartRepository.findById(cartId).get();
     }
 
     @Override
@@ -37,6 +37,7 @@ public class CartService implements ICartService {
 
     @Override
     public void deleteCart(int cartId) {
+
         cartRepository.deleteById(cartId);
     }
 }
