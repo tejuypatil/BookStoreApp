@@ -27,5 +27,10 @@ public class BookStoreExceptionHandler {
         return new ResponseEntity<ExceptionResponse>(exceptionResponse,HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> userIsNotAdmin(UserIsNotAdmin userIsNotAdmin){
+        ExceptionResponse exceptionResponse = new ExceptionResponse(userIsNotAdmin.getMessage());
+        return new ResponseEntity<ExceptionResponse>(exceptionResponse,HttpStatus.BAD_REQUEST);
+    }
 }
 

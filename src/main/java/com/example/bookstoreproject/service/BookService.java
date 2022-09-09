@@ -4,6 +4,7 @@ import com.example.bookstoreproject.dto.BookRequestDTO;
 import com.example.bookstoreproject.entity.Book;
 import com.example.bookstoreproject.entity.UserData;
 import com.example.bookstoreproject.exception.InvalidTokenException;
+import com.example.bookstoreproject.exception.UserIsNotAdmin;
 import com.example.bookstoreproject.repository.BookRepository;
 import com.example.bookstoreproject.repository.UserRepository;
 import com.example.bookstoreproject.util.TokenUtility;
@@ -45,8 +46,16 @@ public class BookService implements IBookService {
         Optional<UserData> optionalUserData = userRepository.findById(userId);
         if(optionalUserData.isPresent())
         {
-            Book book = new Book(bookRequestDTO);
-            return bookRepository.save(book);
+            UserData loggedInUser = optionalUserData.get();
+            if(loggedInUser.isAdmin())
+            {
+                Book book = new Book(bookRequestDTO);
+                return bookRepository.save(book);
+            }
+            else
+            {
+                throw new UserIsNotAdmin();
+            }
         }
         else {
             throw new InvalidTokenException(token);
