@@ -40,8 +40,16 @@ public class CartService implements ICartService {
     }
 
     @Override
-    public Cart getCart(int cartId) {
-        return cartRepository.findById(cartId).get();
+    public Cart getCart(int cartId,String token) {
+        int userId= tokenUtility.decodeToken(token);
+        Optional<UserData> optionalUserData = userRepository.findById(userId);
+        if(optionalUserData.isPresent())
+        {
+            return cartRepository.findById(cartId).get();
+        }
+        else {
+            throw new InvalidTokenException(token);
+        }
     }
 
     @Override

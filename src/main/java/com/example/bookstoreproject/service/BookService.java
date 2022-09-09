@@ -44,15 +44,28 @@ public class BookService implements IBookService {
             throw new InvalidTokenException(token);
         }
     }
-
     @Override
     public Book getBook(int bookId,String token) {
         int userId= tokenUtility.decodeToken(token);
         Optional<UserData> optionalUserData = userRepository.findById(userId);
         if(optionalUserData.isPresent())
         {
-           // Book book = new Book(bookRequestDTO);
             return bookRepository.findById(bookId).orElse(null);
+        }
+        else {
+            throw new InvalidTokenException(token);
+        }
+    }
+    @Override
+    public Book updateBook(int bookId, BookRequestDTO bookRequestDTO,String token) {
+        int userId= tokenUtility.decodeToken(token);
+        Optional<UserData> optionalUserData = userRepository.findById(userId);
+        if(optionalUserData.isPresent())
+        {
+            Book book = this.getBook(bookId,token);
+            book.setName(bookRequestDTO.name);
+            book.setAuthor(bookRequestDTO.author);
+            return bookRepository.save(book);
         }
         else {
             throw new InvalidTokenException(token);
@@ -60,14 +73,15 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public Book updateBook(int bookId, BookRequestDTO bookRequestDTO,String token) {
-        Book book = this.getBook(bookId,token);
-        book.setName(bookRequestDTO.name);
-        book.setAuthor(bookRequestDTO.author);
-        return bookRepository.save(book);
-    }
-    @Override
-    public void deleteBook(int bookId) {
-        bookRepository.deleteById(bookId);
+    public void deleteBook(int bookId,String token) {
+        int userId= tokenUtility.decodeToken(token);
+        Optional<UserData> optionalUserData = userRepository.findById(userId);
+        if(optionalUserData.isPresent())
+        {
+            bookRepository.deleteById(bookId);
+        }
+        else {
+            throw new InvalidTokenException(token);
+        }
     }
 }

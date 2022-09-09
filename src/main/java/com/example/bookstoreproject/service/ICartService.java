@@ -10,7 +10,7 @@ public interface ICartService {
 
     Cart createCart(String token,CartRequestDTO cartRequestDTO);
 
-    Cart getCart(int cartId);
+    Cart getCart(int cartId,String token);
 
     Cart updateCart(int cartId, CartRequestDTO cartRequestDTO);
 

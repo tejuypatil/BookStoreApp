@@ -14,6 +14,6 @@ public interface IBookService {
 
     public Book updateBook(int bookId, BookRequestDTO bookRequestDTO,String token);
 
-    public void deleteBook(int bookId);
+    public void deleteBook(int bookId,String token);
 
 }

@@ -40,8 +40,8 @@ public class BookStoreController {
         return new ResponseEntity<BookResponseDTO>(new BookResponseDTO("Updated book data successfully",book),HttpStatus.OK);
     }
     @DeleteMapping("/bookservice/{bookId}")
-    public ResponseEntity<BookResponseDTO> deleteByBookId(@PathVariable("bookId") int bookId){
-    bookService.deleteBook(bookId);
+    public ResponseEntity<BookResponseDTO> deleteByBookId(@PathVariable("bookId") int bookId,@RequestHeader(name = "Authorization")String token){
+    bookService.deleteBook(bookId,token);
     return new ResponseEntity<BookResponseDTO>(new BookResponseDTO("Deleted successfully",null),HttpStatus.OK);
     }
 }

@@ -21,8 +21,8 @@ public class CartController {
     }
 
     @GetMapping("cartservice/{cartId}")
-    public ResponseEntity<CartResponseDTO> getBookById(@PathVariable("cartId") int cartId){
-        Cart cart = cartService.getCart(cartId);
+    public ResponseEntity<CartResponseDTO> getBookById(@PathVariable("cartId") int cartId,@RequestHeader(name = "Authorization")String token){
+        Cart cart = cartService.getCart(cartId,token);
         return new ResponseEntity<CartResponseDTO>(new CartResponseDTO("Get call for Id successful",cart),HttpStatus.OK);
 
     }
