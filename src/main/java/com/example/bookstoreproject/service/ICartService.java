@@ -12,7 +12,7 @@ public interface ICartService {
 
     Cart getCart(int cartId,String token);
 
-    Cart updateCart(int cartId, CartRequestDTO cartRequestDTO);
+    Cart updateCart(int cartId, CartRequestDTO cartRequestDTO,String token);
 
-    void deleteCart(int bookId);
+    void deleteCart(int bookId,String token);
 }

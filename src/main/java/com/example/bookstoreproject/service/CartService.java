@@ -53,16 +53,31 @@ public class CartService implements ICartService {
     }
 
     @Override
-    public Cart updateCart(int cartId, CartRequestDTO cartRequestDTO) {
-        Cart cart=cartRepository.getReferenceById(cartId);
-        cart.setQuantity(cartRequestDTO.getQuantity());
-        cart.setBookIds(cartRequestDTO.getBookIds());
-        return cartRepository.save(cart);
+    public Cart updateCart(int cartId, CartRequestDTO cartRequestDTO,String token) {
+        int userId= tokenUtility.decodeToken(token);
+        Optional<UserData> optionalUserData = userRepository.findById(userId);
+        if(optionalUserData.isPresent())
+        {
+            Cart cart=cartRepository.getReferenceById(cartId);
+            cart.setQuantity(cartRequestDTO.getQuantity());
+            cart.setBookIds(cartRequestDTO.getBookIds());
+            return cartRepository.save(cart);
+        }
+        else {
+            throw new InvalidTokenException(token);
+        }
     }
 
     @Override
-    public void deleteCart(int cartId) {
-
-        cartRepository.deleteById(cartId);
+    public void deleteCart(int cartId,String token) {
+        int userId= tokenUtility.decodeToken(token);
+        Optional<UserData> optionalUserData = userRepository.findById(userId);
+        if(optionalUserData.isPresent())
+        {
+            cartRepository.deleteById(cartId);
+        }
+        else {
+            throw new InvalidTokenException(token);
+        }
     }
 }

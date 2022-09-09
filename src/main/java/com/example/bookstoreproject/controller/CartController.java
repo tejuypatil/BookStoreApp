@@ -27,13 +27,13 @@ public class CartController {
 
     }
     @PutMapping("/cartservice/{cartId}")
-    public ResponseEntity<CartResponseDTO> updateBookById(@PathVariable("cartId")int cartId,@RequestBody CartRequestDTO cartRequestDTO){
-        Cart cart = cartService.updateCart(cartId,cartRequestDTO);
+    public ResponseEntity<CartResponseDTO> updateBookById(@PathVariable("cartId")int cartId,@RequestBody CartRequestDTO cartRequestDTO,@RequestHeader(name = "Authorization")String token){
+        Cart cart = cartService.updateCart(cartId,cartRequestDTO,token);
         return new ResponseEntity<CartResponseDTO>(new CartResponseDTO("Updated Cart data successfully",cart),HttpStatus.OK);
     }
     @DeleteMapping("/cartservice/{cartId}")
-    public ResponseEntity<CartResponseDTO> deleteByBookId(@PathVariable("cartId") int cartId){
-        cartService.deleteCart(cartId);
+    public ResponseEntity<CartResponseDTO> deleteByBookId(@PathVariable("cartId") int cartId,@RequestHeader(name = "Authorization")String token){
+        cartService.deleteCart(cartId,token);
         return new ResponseEntity<CartResponseDTO>(new CartResponseDTO("Deleted successfully",null),HttpStatus.OK);
     }
 }
