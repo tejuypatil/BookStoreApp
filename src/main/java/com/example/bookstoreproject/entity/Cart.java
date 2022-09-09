@@ -32,7 +32,6 @@ public class Cart {
     {
         this.quantity=cartRequestDTO.getQuantity();
         this.bookIds = cartRequestDTO.getBookIds();
-        this.userData = cartRequestDTO.getUserData();
     }
 
     public Cart() {

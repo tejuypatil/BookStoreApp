@@ -26,12 +26,13 @@ public class CartService implements ICartService {
     UserRepository userRepository;
     @Override
     public Cart createCart(String token,CartRequestDTO cartRequestDTO) {
-
         int userId= tokenUtility.decodeToken(token);
         Optional<UserData> optionalUserData = userRepository.findById(userId);
         if(optionalUserData.isPresent())
         {
             Cart cart =new Cart(cartRequestDTO);
+            UserData loggedInUserData = optionalUserData.get();
+            cart.setUserData(loggedInUserData);
             return cartRepository.save(cart);
         }
         else {

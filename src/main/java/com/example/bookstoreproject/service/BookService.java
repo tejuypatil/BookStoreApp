@@ -22,13 +22,21 @@ public class BookService implements IBookService {
     @Autowired
     UserRepository userRepository;
     @Override
-    public List<Book> getAllBooks()
+    public List<Book> getAllBooks(String token)
     {
-        List<Book> bookList = bookRepository.findAll();
-        if (bookList.isEmpty()){
-            return null;
+        int userId= tokenUtility.decodeToken(token);
+        Optional<UserData> optionalUserData = userRepository.findById(userId);
+        if(optionalUserData.isPresent())
+        {
+            List<Book> bookList = bookRepository.findAll();
+            if (bookList.isEmpty()){
+                return null;
+            }
+            return bookList;
         }
-        return bookList;
+        else {
+            throw new InvalidTokenException(token);
+        }
     }
 
     @Override

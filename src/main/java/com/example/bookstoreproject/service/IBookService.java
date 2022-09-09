@@ -6,7 +6,7 @@ import com.example.bookstoreproject.entity.Book;
 import java.util.List;
 
 public interface IBookService {
-    public List<Book> getAllBooks();
+    public List<Book> getAllBooks(String token);
 
     public Book createBook(String token,BookRequestDTO bookRequestDTO);
 

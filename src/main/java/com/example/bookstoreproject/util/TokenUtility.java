@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TokenUtility {
-    private static final String TOKEN_SECRET = " ";
+    private static final String TOKEN_SECRET = "hubhhubghjb";
 
     public String createToken(int id) {
         try {
@@ -42,7 +42,7 @@ public class TokenUtility {
             //for verification algorithm
             Verification verification = null;
 
-            verification = JWT.require(Algorithm.HMAC256(TOKEN_SECRET));
+            verification = JWT.require(Algorithm.HMAC256(TOKEN_SECRET)) ;
 
             assert verification != null;
             JWTVerifier jwtverifier = verification.build();

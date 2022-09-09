@@ -10,5 +10,4 @@ import java.util.List;
 public class CartRequestDTO {
     private int quantity;
     private List<Integer> bookIds;
-    private UserData userData;
 }

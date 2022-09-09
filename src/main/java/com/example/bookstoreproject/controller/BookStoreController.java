@@ -18,8 +18,8 @@ public class BookStoreController {
     public IBookService bookService;
 
     @GetMapping("/bookservice")
-    public List<Book> getAllBooks() {
-        List<Book> bookList= bookService.getAllBooks();
+    public List<Book> getAllBooks(@RequestHeader(name = "Authorization")String token) {
+        List<Book> bookList= bookService.getAllBooks(token);
         return bookList;
     }
     @PostMapping("/bookservice")
