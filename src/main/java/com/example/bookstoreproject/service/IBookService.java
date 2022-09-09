@@ -10,9 +10,9 @@ public interface IBookService {
 
     public Book createBook(String token,BookRequestDTO bookRequestDTO);
 
-    public Book getBook(int bookId);
+    public Book getBook(int bookId,String token);
 
-    public Book updateBook(int bookId, BookRequestDTO bookRequestDTO);
+    public Book updateBook(int bookId, BookRequestDTO bookRequestDTO,String token);
 
     public void deleteBook(int bookId);
 

@@ -8,7 +8,7 @@ import java.util.List;
 public interface ICartService {
 
 
-    Cart createCart(CartRequestDTO cartRequestDTO);
+    Cart createCart(String token,CartRequestDTO cartRequestDTO);
 
     Cart getCart(int cartId);
 

@@ -29,14 +29,14 @@ public class BookStoreController {
     }
 
     @GetMapping("bookservice/{bookId}")
-    public ResponseEntity<BookResponseDTO> getBookById(@PathVariable("bookId") int bookId){
-        Book book = bookService.getBook(bookId);
+    public ResponseEntity<BookResponseDTO> getBookById(@PathVariable("bookId") int bookId,@RequestHeader(name = "Authorization") String token){
+        Book book = bookService.getBook(bookId,token);
         return new ResponseEntity<BookResponseDTO>(new BookResponseDTO("Get call for Id successful",book),HttpStatus.OK);
 
     }
     @PutMapping("/bookservice/{bookId}")
-    public ResponseEntity<BookResponseDTO> updateBookById(@PathVariable("bookId")int bookId,@RequestBody BookRequestDTO bookRequestDTO){
-        Book book = bookService.updateBook(bookId,bookRequestDTO);
+    public ResponseEntity<BookResponseDTO> updateBookById(@PathVariable("bookId")int bookId,@RequestBody BookRequestDTO bookRequestDTO,@RequestHeader(name = "Authorization")String token){
+        Book book = bookService.updateBook(bookId,bookRequestDTO,token);
         return new ResponseEntity<BookResponseDTO>(new BookResponseDTO("Updated book data successfully",book),HttpStatus.OK);
     }
     @DeleteMapping("/bookservice/{bookId}")

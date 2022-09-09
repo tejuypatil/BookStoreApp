@@ -46,13 +46,22 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public Book getBook(int bookId) {
-        return bookRepository.findById(bookId).orElse(null);
+    public Book getBook(int bookId,String token) {
+        int userId= tokenUtility.decodeToken(token);
+        Optional<UserData> optionalUserData = userRepository.findById(userId);
+        if(optionalUserData.isPresent())
+        {
+           // Book book = new Book(bookRequestDTO);
+            return bookRepository.findById(bookId).orElse(null);
+        }
+        else {
+            throw new InvalidTokenException(token);
+        }
     }
 
     @Override
-    public Book updateBook(int bookId, BookRequestDTO bookRequestDTO) {
-        Book book = this.getBook(bookId);
+    public Book updateBook(int bookId, BookRequestDTO bookRequestDTO,String token) {
+        Book book = this.getBook(bookId,token);
         book.setName(bookRequestDTO.name);
         book.setAuthor(bookRequestDTO.author);
         return bookRepository.save(book);

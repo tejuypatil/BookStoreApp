@@ -57,7 +57,7 @@ public class TokenUtility {
         {
             e.printStackTrace();
         }
-        catch (SignatureVerificationException exception){
+        catch (Exception exception){
             throw new  InvalidTokenException(token);
         }
 
