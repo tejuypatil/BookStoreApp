@@ -8,7 +8,7 @@ import java.util.List;
 public interface IBookService {
     public List<Book> getAllBooks();
 
-    public Book createBook(BookRequestDTO bookRequestDTO);
+    public Book createBook(String token,BookRequestDTO bookRequestDTO);
 
     public Book getBook(int bookId);
 

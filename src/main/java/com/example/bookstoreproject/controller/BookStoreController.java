@@ -23,8 +23,8 @@ public class BookStoreController {
         return bookList;
     }
     @PostMapping("/bookservice")
-    public ResponseEntity<BookResponseDTO>createBookData(@RequestBody BookRequestDTO bookRequestDTO){
-        Book book = bookService.createBook(bookRequestDTO);
+    public ResponseEntity<BookResponseDTO>createBookData(@RequestBody BookRequestDTO bookRequestDTO,@RequestHeader(name = "Authorization") String token){
+        Book book = bookService.createBook(token,bookRequestDTO);
         return new ResponseEntity<BookResponseDTO>(new BookResponseDTO("Inserted book data successfully",book),HttpStatus.OK);
     }
 

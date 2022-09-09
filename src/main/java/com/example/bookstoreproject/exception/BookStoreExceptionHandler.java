@@ -21,6 +21,11 @@ public class BookStoreExceptionHandler {
         ExceptionResponse exceptionResponse = new ExceptionResponse(userOrPasswordWrong.getMessage());
         return new ResponseEntity<ExceptionResponse>(exceptionResponse,HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> invalidTokenException(InvalidTokenException invalidTokenException){
+        ExceptionResponse exceptionResponse = new ExceptionResponse(invalidTokenException.getMessage());
+        return new ResponseEntity<ExceptionResponse>(exceptionResponse,HttpStatus.BAD_REQUEST);
+    }
 
 }
 

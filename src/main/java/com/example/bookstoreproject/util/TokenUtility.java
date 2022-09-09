@@ -2,10 +2,12 @@ package com.example.bookstoreproject.util;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import com.auth0.jwt.interfaces.Verification;
+import com.example.bookstoreproject.exception.InvalidTokenException;
 import org.springframework.stereotype.Component;
 
 
@@ -35,23 +37,31 @@ public class TokenUtility {
     }
 
     public int decodeToken(String token) {
-        int userid;
-        //for verification algorithm
-        Verification verification = null;
         try {
+            int userid;
+            //for verification algorithm
+            Verification verification = null;
+
             verification = JWT.require(Algorithm.HMAC256(TOKEN_SECRET));
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
+
+            assert verification != null;
+            JWTVerifier jwtverifier = verification.build();
+            //to decode token
+            DecodedJWT decodedjwt = jwtverifier.verify(token);
+
+            Claim claim = decodedjwt.getClaim("user_id");
+            userid = claim.asInt();
+            return userid;
+        }
+        catch (IllegalArgumentException e)
+        {
             e.printStackTrace();
         }
-        assert verification != null;
-        JWTVerifier jwtverifier = verification.build();
-        //to decode token
-        DecodedJWT decodedjwt = jwtverifier.verify(token);
+        catch (SignatureVerificationException exception){
+            throw new  InvalidTokenException(token);
+        }
 
-        Claim claim = decodedjwt.getClaim("user_id");
-        userid = claim.asInt();
-        return userid;
+        return -1;
     }
 
 }
