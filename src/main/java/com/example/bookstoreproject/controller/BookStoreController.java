@@ -44,4 +44,10 @@ public class BookStoreController {
     bookService.deleteBook(bookId,token);
     return new ResponseEntity<BookResponseDTO>(new BookResponseDTO("Deleted successfully",null),HttpStatus.OK);
     }
+
+    @GetMapping("/bookservice/search/{bookName}")
+    public List<Book>findBookByBookName(@PathVariable("bookName")String bookName,@RequestHeader(name = "Authorization")String token){
+       List<Book> book= bookService.findBookByName(bookName,token);
+       return book;
+    }
 }

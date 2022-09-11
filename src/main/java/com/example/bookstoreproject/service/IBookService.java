@@ -16,4 +16,5 @@ public interface IBookService {
 
     public void deleteBook(int bookId,String token);
 
+    List<Book> findBookByName(String bookName, String token);
 }

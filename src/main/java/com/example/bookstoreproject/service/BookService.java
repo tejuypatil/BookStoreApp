@@ -88,7 +88,6 @@ public class BookService implements IBookService {
             throw new InvalidTokenException(token);
         }
     }
-
     @Override
     public void deleteBook(int bookId,String token) {
         int userId= tokenUtility.decodeToken(token);
@@ -101,4 +100,17 @@ public class BookService implements IBookService {
             throw new InvalidTokenException(token);
         }
     }
+
+    public List <Book> findBookByName(String bookName,String token){
+        int userId= tokenUtility.decodeToken(token);
+        Optional<UserData> optionalUserData = userRepository.findById(userId);
+        if(optionalUserData.isPresent()) {
+            List<Book> book = bookRepository.findBookByName(bookName);
+            return book;
+        }
+        else {
+            throw new InvalidTokenException(token);
+        }
+   }
+
 }

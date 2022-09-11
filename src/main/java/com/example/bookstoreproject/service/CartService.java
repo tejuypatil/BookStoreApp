@@ -1,11 +1,8 @@
 package com.example.bookstoreproject.service;
-
 import com.example.bookstoreproject.dto.CartRequestDTO;
-import com.example.bookstoreproject.entity.Book;
 import com.example.bookstoreproject.entity.Cart;
 import com.example.bookstoreproject.entity.UserData;
 import com.example.bookstoreproject.exception.InvalidTokenException;
-import com.example.bookstoreproject.repository.BookRepository;
 import com.example.bookstoreproject.repository.CartRepository;
 import com.example.bookstoreproject.repository.UserRepository;
 import com.example.bookstoreproject.util.TokenUtility;

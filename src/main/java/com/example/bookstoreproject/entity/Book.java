@@ -20,12 +20,11 @@ public class Book {
     private LocalDate arrivalDate;
     private String coverImage;
     private int quantity;
-
-
-
     public Book(BookRequestDTO bookRequestDTO) {
         this.name = bookRequestDTO.name;
         this.author = bookRequestDTO.author;
+        this.price = bookRequestDTO.price;
+        this.quantity = bookRequestDTO.quantity;
     }
     public Book()
     {

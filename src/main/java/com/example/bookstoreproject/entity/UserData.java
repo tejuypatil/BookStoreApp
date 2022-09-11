@@ -24,9 +24,8 @@ public class UserData {
 
     @Column(nullable = false)
     private boolean isAdmin;
-
-
-    public UserData(UserRegisterRequestDTO userRegisterRequestDTO) {
+    public UserData(UserRegisterRequestDTO userRegisterRequestDTO)
+    {
         this.firstName=userRegisterRequestDTO.getFirstName();
         this.lastName=userRegisterRequestDTO.getLastName();
         this.address=userRegisterRequestDTO.getAddress();
@@ -35,11 +34,11 @@ public class UserData {
         this.password=userRegisterRequestDTO.getPassword();
         this.isAdmin=userRegisterRequestDTO.isAdmin();
     }
-
     public UserData() {
 
     }
-    public void setUserId(int userId) {
+    public void setUserId(int userId)
+    {
         this.userId = userId;
     }
 }
