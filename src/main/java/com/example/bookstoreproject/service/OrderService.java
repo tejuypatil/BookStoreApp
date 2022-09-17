@@ -2,7 +2,6 @@ package com.example.bookstoreproject.service;
 
 import com.example.bookstoreproject.dto.OrderRequestDTO;
 import com.example.bookstoreproject.entity.Book;
-import com.example.bookstoreproject.entity.Cart;
 import com.example.bookstoreproject.entity.Order;
 import com.example.bookstoreproject.entity.UserData;
 import com.example.bookstoreproject.exception.InvalidTokenException;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Optional;
 @Service
 public class OrderService implements IOrderService{
@@ -62,6 +60,25 @@ public class OrderService implements IOrderService{
             return orderRepository.findById(orderId).get();
         }
         else {
+            throw new InvalidTokenException(token);
+        }
+    }
+
+    @Override
+    public Order cancelOrder(int orderId,String token) {
+        int userId= tokenUtility.decodeToken(token);
+        Optional<UserData> optionalUserData = userRepository.findById(userId);
+        if(optionalUserData.isPresent()) {
+                Order order = new Order();
+                order.setCanceled(true);
+                Book book = bookRepository.findById(order.getBook().getBookId()).get();
+                book.setQuantity(book.getQuantity() + order.getQuantity());
+                bookRepository.save(book);
+                order.setBook(book);
+                return orderRepository.save(order);
+        }
+        else
+        {
             throw new InvalidTokenException(token);
         }
     }

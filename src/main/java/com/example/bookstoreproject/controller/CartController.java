@@ -2,7 +2,6 @@ package com.example.bookstoreproject.controller;
 
 import com.example.bookstoreproject.dto.CartRequestDTO;
 import com.example.bookstoreproject.dto.CartResponseDTO;
-import com.example.bookstoreproject.entity.Book;
 import com.example.bookstoreproject.entity.Cart;
 import com.example.bookstoreproject.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;

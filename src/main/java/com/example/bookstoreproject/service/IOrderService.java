@@ -10,4 +10,6 @@ public interface IOrderService {
     public Order createOrder(String token, OrderRequestDTO orderRequestDTO);
 
     Order getOrder(int orderId, String token);
+
+    Order cancelOrder(int orderId, String token);
 }

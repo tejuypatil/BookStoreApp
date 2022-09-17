@@ -26,4 +26,9 @@ public class OrderController {
         return new ResponseEntity<OrderResponseDTO>(new OrderResponseDTO("Get call for Id successful",book),HttpStatus.OK);
 
     }
+    @PutMapping("/orderservice/{orderId}")
+    public ResponseEntity<OrderResponseDTO>cancelOrder(@PathVariable("orderId")int orderId,@RequestHeader(name = "Authorization")String token){
+        Order order = orderService.cancelOrder(orderId,token);
+        return new ResponseEntity<OrderResponseDTO>(new OrderResponseDTO("Order cancelled successfully",order),HttpStatus.OK);
+    }
 }
